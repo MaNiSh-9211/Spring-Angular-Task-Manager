@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Task Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div><strong>Title: </strong>{{ task?.title }}</div>
+      <div><strong>Description: </strong>{{ task?.description }}</div>
+      <div><strong>Due Date: </strong>{{ task?.dueDate | date }}</div>
+      <div><strong>Status: </strong>{{ task?.status }}</div>
+    </mat-card-content>
+  </mat-card>
+  

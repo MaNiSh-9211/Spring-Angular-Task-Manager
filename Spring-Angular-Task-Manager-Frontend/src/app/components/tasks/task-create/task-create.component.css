@@ -1,0 +1,14 @@
+.full-width {
+    width: 100%;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    margin: auto;
+  }
+  

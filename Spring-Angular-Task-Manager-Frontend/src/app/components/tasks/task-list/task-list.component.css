@@ -1,0 +1,15 @@
+.task-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  mat-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
