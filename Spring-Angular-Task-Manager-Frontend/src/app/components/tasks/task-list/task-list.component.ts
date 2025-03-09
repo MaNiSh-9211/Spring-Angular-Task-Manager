@@ -1,3 +1,5 @@
+
+
 import { Component } from '@angular/core';
 import { TaskService } from '../../../services/task.service';
 import { MatTableModule } from '@angular/material/table';
@@ -7,8 +9,10 @@ import { RouterLink } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { DatePipe, AsyncPipe } from '@angular/common'; 
+import { DatePipe, AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDeleteComponent } from '../task-delete/task-delete.component';
 
 @Component({
   selector: 'app-task-list',
@@ -64,7 +68,7 @@ import { CommonModule } from '@angular/common';
           <button mat-icon-button [routerLink]="['/tasks/edit', task.id]">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button (click)="deleteTask(task.id)">
+          <button mat-icon-button (click)="openDeleteDialog(task.id, task.title)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
@@ -96,14 +100,27 @@ export class TaskListComponent {
   displayedColumns = ['title', 'dueDate', 'status', 'actions'];
   tasks$;
 
-  constructor(private taskService: TaskService) {
-    // Initialize tasks$ inside the constructor after taskService is injected
+  constructor(
+    private taskService: TaskService,
+    private dialog: MatDialog
+  ) {
     this.tasks$ = this.taskService.getAllTasks();
   }
 
-  deleteTask(id: number) {
-    this.taskService.deleteTask(id).subscribe(() => {
-      this.tasks$ = this.taskService.getAllTasks();
+  openDeleteDialog(taskId: number, taskTitle: string): void {
+    const dialogRef = this.dialog.open(TaskDeleteComponent, {
+      data: { taskTitle: taskTitle }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.deleteTask(taskId).subscribe({
+          next: () => {
+            this.tasks$ = this.taskService.getAllTasks();
+          },
+          error: (err) => console.error('Error deleting task:', err)
+        });
+      }
     });
   }
 }

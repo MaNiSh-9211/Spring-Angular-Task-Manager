@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,28 +14,31 @@ import { Router } from '@angular/router';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    RouterModule
   ],
   template: `
     <mat-toolbar color="primary">
-      <button mat-icon-button (click)="toggleSidenav.emit()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <span>Task Manager</span>
-      
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <mat-icon>task_alt</mat-icon>
+        <span class="app-name">Task Manager</span>
+      </div>
+
+      <!-- Navigation Links -->
+      <button mat-button routerLink="/home">Home</button>
+      <button mat-button routerLink="/about">About</button>
+      <button mat-button routerLink="/tasks">Tasks</button>
+
       <div class="spacer"></div>
-      
-      <div *ngIf="authService.isAuthenticated">
-        <button mat-button [matMenuTriggerFor]="userMenu">
-          <mat-icon>account_circle</mat-icon>
-          {{ authService.currentUserValue?.username }}
+
+      <!-- User Section -->
+      <div *ngIf="authService.isAuthenticated" class="user-section">
+        <span class="welcome-message">Welcome, {{ authService.currentUserValue?.username }}!</span>
+        <button mat-raised-button color="warn" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
         </button>
-        <mat-menu #userMenu="matMenu">
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>logout</mat-icon>
-            Logout
-          </button>
-        </mat-menu>
       </div>
     </mat-toolbar>
   `,
@@ -46,6 +50,30 @@ import { Router } from '@angular/router';
       position: sticky;
       top: 0;
       z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+    }
+    .logo-section {
+      display: flex;
+      align-items: center;
+      margin-right: 2rem;
+      mat-icon {
+        margin-right: 0.5rem;
+      }
+      .app-name {
+        font-weight: 500;
+      }
+    }
+    .user-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      .welcome-message {
+        margin-right: 1rem;
+      }
+    }
+    button.mat-button {
+      margin: 0 0.5rem;
     }
   `]
 })
@@ -59,5 +87,6 @@ export class HeaderComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

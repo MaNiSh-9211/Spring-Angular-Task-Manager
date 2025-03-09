@@ -1,26 +1,34 @@
-// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from './services/auth.service';
 import { LoaderComponent } from './components/shared/loader/loader.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
-
   imports: [
-    RouterOutlet,
+    HeaderComponent,
+    DashboardComponent,
+    LoaderComponent,
     MatProgressSpinnerModule,
-    LoaderComponent
+    RouterModule
   ],
+  providers: [provideNativeDateAdapter()],
   template: `
-    <app-loader></app-loader>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+  <app-loader></app-loader>
+`,
+  styles: [`
+    :host {
+      display: block;
+      height: 100vh;
+    }
+  `]
 })
 export class AppComponent {
   constructor(public authService: AuthService) {}

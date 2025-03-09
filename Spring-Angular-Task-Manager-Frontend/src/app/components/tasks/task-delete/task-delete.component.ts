@@ -1,4 +1,4 @@
-// components/task-delete/task-delete.component.ts
+
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,12 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     </mat-dialog-actions>
   `,
   styles: [`
-    mat-dialog-content {
-      padding: 16px 24px;
-    }
-    mat-dialog-actions {
-      padding: 16px 24px;
-    }
+    mat-dialog-content { padding: 16px 24px; }
+    mat-dialog-actions { padding: 16px 24px; }
   `]
 })
 export class TaskDeleteComponent {
