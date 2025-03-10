@@ -14,3 +14,4 @@ Built with Spring Boot (Backend) and Angular (Frontend) using Angular Material U
 🔗 With seamless integration between the Spring Boot backend and the Angular frontend, this project delivers a smooth, user-friendly experience. The system is designed with scalability, security, and maintainability in mind.
 
 💻 Whether you're a team leader or a solo user, this app makes task management efficient, organized, and effective. 🚀
+
